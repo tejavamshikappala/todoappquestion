@@ -116,7 +116,7 @@ app.post("/todos/", async (request, response) => {
 
 ///4
 //PUT
-app.put("todos/:todoId", async (request, response) => {
+app.put("/todos/:todoId/", async (request, response) => {
   const { todoId } = request.params;
   let updateColumn = "";
   const requestBody = request.body;
@@ -139,14 +139,14 @@ app.put("todos/:todoId", async (request, response) => {
     status = previousTodo.status,
   } = request.body;
   const updateTodoQuery = `
-    UPDATE 
-    todo
-    SET 
-    todo='${todo}',
-    priority='${priority}',
-    status='${status}'
+        UPDATE 
+        todo
+        SET 
+        todo='${todo}',
+        priority='${priority}',
+        status='${status}'
 
-    WHERE id =${todoId};`;
+        WHERE id =${todoId};`;
   await forDb.run(updateTodoQuery);
   response.send(`${updateColumn} Updated`);
 });
@@ -159,4 +159,4 @@ app.delete("/todos/:todoId/", async (request, response) => {
   const final = await forDb.get(forDel);
   response.send("Todo Deleted");
 });
-module.exports = ForApp;
+module.exports = app;
